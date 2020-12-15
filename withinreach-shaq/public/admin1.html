@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="w3.css" >
+
+    <title>Within Reach App</title>
+  </head>
+  <body>
+
+    <div class="w3-container w3-green">
+      <h1>Within Reach Admin Panel</h1> 
+      <p><h2><i>The Himalayan!</i></h2></p> 
+    </div>
+
+    <div class="w3-row-padding">
+      <div class="w3-third">
+        <table>
+          <tr>
+            <th align="left">latitude:  </th>
+            <td><span id="latitude"></span>&deg;</td>
+          </tr>
+          <tr>
+            <th align="left">longitude:  </th>
+            <td><span id="longitude"></span>&deg;</td>
+          </tr>
+        </table>
+
+        <table>
+          <tr>
+            <th align="left"><br></th>
+            <td><br></td>
+          </tr>
+          <tr>
+            <th><button id="submit" type="button" onClick="onClick()">Seats Taken</button></th>
+            <td>Seats: <a id="seats">0</a></td>
+          </tr>
+        </table>
+
+        <br>
+        <table>
+          <tr>
+            
+            <th><button id="submit" type="button" onClick="onClick2()"> Remove Seats</button></th>
+            </tr>
+  
+          </table>
+
+      </div>
+    </div>
+  <script>
+      let lat, lon;
+      if ('geolocation' in navigator) {
+        console.log('geolocation available');
+        navigator.geolocation.getCurrentPosition(async position => {
+          lat = position.coords.latitude;
+          lon = position.coords.longitude;
+          document.getElementById('latitude').textContent = lat;
+          document.getElementById('longitude').textContent = lon;
+        });
+      } else {
+        console.log('geolocation not available');
+      };
+      
+      var seats = 0;
+      
+      function onClick() {
+        seats += 1 ;
+        document.getElementById("seats").innerHTML = seats;
+      }; 
+
+      function onClick2() {
+        seats -= 1 ;
+        document.getElementById("seats").innerHTML = seats;
+        submitSeats()
+      };
+
+      const button = document.getElementById('submit');
+
+      button.addEventListener('click', async event => {
+        await submitSeats()
+      });
+
+      async function submitSeats() {        
+        const data = { seats };
+        const options = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+        };
+        const response = await fetch('/api', options);
+        const json = await response.json();
+      }
+
+      window.onload = function() {submitSeats();}  
+
+  </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<title>Within Reach Login Form Validation</title>
+<!-- Include CSS File Here -->
+<link rel="stylesheet" href="style.css"/>
+
+
+<!-- Include JS File Here -->
+<script src="login.js"></script>
+</head>
+<body>
+
+    <div class="titleBlock" role="banner">
+        <h1 style="text-align: left;">Within Reach Admin Panel</h1>
+        <h3 style="text-align: left;"><i>Till the End of time!</i></h3>
+   	</div>
+
+    <div class="main">
+        <h2>Existing Admin Login</h2>
+        <form id="form_id" method="post" name="myform">
+        <label>User Name :</label>
+        <input type="text" name="username" id="username"/>
+        <label>Password :</label>
+        <input type="password" name="password" id="password"/>
+        <div id = "error" style="color:red"></div>
+        <input type="button" value="Login" id="submit" onclick="validate()"/>
+        </form>
+        <span><b class="note">Note : </b>Kindly contact Shakeel or Amir for Username and Password<br/><b class="valid">EvolveU Learners Inc.<br/>Forget us Not!</b></span>
+    </div>
+
+    <div class="newUsermain">
+        <h2>New Admin <a style="color:blue"><b>Registration<b></a></h2>
+        <form id="form_id" method="post" name="myform">
+        <label>Name :</label>
+        <input type="text" name="newusername" id="newusername"/>
+        <label>Password :</label>
+        <input type="newpassword" name="newpassword" id="newpassword"/>
+        <input type="button" value="Submit" id="submit" onclick="Register()"/>
+        </form>
+        <span><b class="note">Note : </b>Kindly contact Shakeel or Amir for Username and Password<br/><b class="valid">EvolveU Learners Inc.<br/>Forget us Not!</b></span>
+        </div>
+</html>

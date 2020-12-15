@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Within Reach - User Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta http-equiv="refresh" content="5"/>
+<link rel="stylesheet" href="w3.css" >
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+</head>
+<body padding="100px">
+
+<div class="w3-container w3-blue">
+  <h1>Within Reach!</h1> 
+  <p>Confirm your spot!!</p> 
+</div>
+
+<div class="w3-row-padding">
+  <div class="w3-third">
+    <h2>The Himalayan</h2>
+    <p>The Himalayan Restaurant serves Nepali cuisine, <br>
+      which has influences from India and China.</p>
+
+    <table>
+      <tr>
+        <th align="left">Seats Taken: </th>
+        <th>At Recorded time: </th>
+      </tr>
+      <tr>
+        <td><span id="location_1" ></span></td>
+       
+        <td><span id="time_1"></span></td>
+      </tr>
+      
+    </table>
+
+  </div>
+
+  <div class="w3-third">
+    <h2>Sukiyaki House</h2>
+    
+    <p>Welcome to the new Sukiyaki House- <br>
+      a place where the finest authentic Japanese
+       cuisine <br>is presented in a contemporary chic setting. </p>
+
+      <table>
+      <tr>
+        <th>Seats Taken: </th>
+        <th>At Recorded time: </th>
+      </tr>
+      <tr>
+        <td><span id="location_2" ></span></td>
+        <td><span id="time_2"></span></td>
+      </tr>
+      
+    </table>
+
+  </div>
+
+  <div class="w3-third">
+    <h2>Moroccan Tent</h2>
+    <p>Authentic Moroccan Cuisine! <br>
+      Moroccan Tent Calgary is a unique restaurant<br>
+      with the best Moroccan food in Calgary. 
+      </p>
+      
+      <table>
+        <tr>
+          <th>Seats Taken: </th>
+          <th>At Recorded time: </th>
+        </tr>
+        <tr>
+          <td><span id="location_3" ></span></td>
+          <td><span id="time_3"></span></td>
+        </tr>
+        
+      </table>
+  </div>
+</div>
+
+
+
+  <table>
+    
+    <tr>
+      <td><canvas id="myChart1" style="width: 100%;" ></canvas></td>
+    </tr>
+    
+  </table>
+
+  <table>
+    
+    <tr>
+    <td><canvas id="myChart2" style="width: 100%;"></canvas></span></td>
+    </tr>
+    
+  </table>
+
+  <table>
+    
+    <tr>
+    <td><canvas id="myChart3" style="width: 100%;"></canvas></span></td>
+    </tr>
+    
+  </table>
+
+<p>To Calculate the distance and time to reach us kindly use Google Maps</p>
+
+<button onclick="myFunction()">Open Google Maps</button>
+<p>
+<img src="googlemaps.jpg"  width="50%" height="30%" margin="50px">
+</p>
+
+    <script>
+
+    // getData();
+    async function getData() {
+      const response = await fetch('/api');
+      const data = await response.json();
+
+      for (item of data) {
+        const root = document.createElement('div');
+        const seatsTaken = document.createElement('div');
+        const date = document.createElement('div');
+      
+        seatsTaken.textContent = `${item.seats}`;
+        var x = seatsTaken.textContent;
+        const dateString = new Date(item.timestamp).toLocaleString();
+        date.textContent = dateString;
+
+        // root.append(seatsTaken, date);
+        /* document.body.append(root); */
+
+        document.getElementById('location_1').textContent = seatsTaken.textContent;
+        
+        document.getElementById('time_1').textContent = date.textContent;
+
+        var ctx = document.getElementById('myChart1').getContext('2d');
+  
+  
+  var myChart1 = new Chart(ctx, {
+
+          type: 'bar',
+      data: {
+          labels: ['The Himalayan'],
+          datasets: [{
+              label: 'Seats Taken:'+x,
+              data: [x,50],
+              backgroundColor: [
+              'rgba(76, 175, 80, 0.2)',
+              'rgba(54, 162, 235, 0.2)'
+              ],
+              borderColor: [
+              'rgba(76, 175, 80, 1)',
+              'rgba(54, 162, 235, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+      }  
+      console.log(data);
+      
+    } 
+    setInterval(getData,3000);
+
+    // getData2();
+    async function getData2() {
+      /* const response = (await fetch('/api2'), 5); */
+      const response = await fetch('/api2');
+     
+      const data = await response.json();
+
+      for (item of data) {
+        const root = document.createElement('div');
+        const seatsTaken = document.createElement('div');
+        const date = document.createElement('div');
+      
+        seatsTaken.textContent = `${item.seats}`;
+        var y = seatsTaken.textContent;
+        
+        const dateString = new Date(item.timestamp).toLocaleString();
+        date.textContent = dateString;
+
+        root.append(seatsTaken, date);
+        /* document.body.append(root); */
+
+        document.getElementById('location_2').textContent = seatsTaken.textContent;
+        document.getElementById('time_2').textContent = date.textContent;
+        
+        var ctx = document.getElementById('myChart2').getContext('2d');
+  
+  
+  var myChart2 = new Chart(ctx, {
+
+          type: 'bar',
+      data: {
+          labels: ['Sukiyaki House'],
+          datasets: [{
+              label: 'Seats Taken:'+y,
+              data: [y,50],
+              backgroundColor: [
+              'rgba(160, 39, 200, 0.2)',
+              'rgba(153, 102, 255, 0.2)'
+              ],
+              borderColor: [
+              'rgba(160, 39, 200, 1)',
+              'rgba(153, 102, 255, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+        
+      }  
+      console.log(data);
+     
+    } 
+
+    setInterval(getData2,3000)
+
+
+
+   
+   
+// getData3();
+async function getData3() {
+      /* const response = (await fetch('/api2'), 5); */
+      const response = await fetch('/api3');
+     
+      const data = await response.json();
+
+      for (item of data) {
+        const root = document.createElement('div');
+        const seatsTaken = document.createElement('div');
+        const date = document.createElement('div');
+      
+        seatsTaken.textContent = `${item.seats}`;
+        var y = seatsTaken.textContent;
+        
+        const dateString = new Date(item.timestamp).toLocaleString();
+        date.textContent = dateString;
+
+        root.append(seatsTaken, date);
+        /* document.body.append(root); */
+
+        document.getElementById('location_3').textContent = seatsTaken.textContent;
+        document.getElementById('time_3').textContent = date.textContent;
+        
+        var ctx = document.getElementById('myChart3').getContext('2d');
+  
+  
+  var myChart3 = new Chart(ctx, {
+
+          type: 'bar',
+      data: {
+          labels: ['Moroccan Tent'],
+          datasets: [{
+              label: 'Seats Taken:'+y,
+              data: [y,50],
+              backgroundColor: [
+              'rgba(233, 30, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)'
+              ],
+              borderColor: [
+              'rgba(233, 30, 192, 1)',
+              'rgba(153, 102, 255, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+        
+      }  
+      console.log(data);
+     
+    } 
+
+    setInterval(getData3,3000)
+  
+    function myFunction() {
+  var myWindow = window.open("https://maps.google.ca", "", "width=500 px,height=500px");
+}
+  </script>
+  </body>
+</html>

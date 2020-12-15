@@ -1,0 +1,17 @@
+{
+  "name": "within-reach",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "devstart": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nedb": "^1.8.0",
+    "nodemon": "^2.0.6"
+  }
+}
